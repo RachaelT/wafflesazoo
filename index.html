@@ -2,55 +2,114 @@
 
 <html>
   <head>
-    
-    </head>
-          <body>
+    <title>wafflesaZOO</title>
+    <style>
+          
+        body 
+        {{
+            color: #fffffe;
+            background-color: #42c2f4;
+            font-family: "Arial";
+            margin:0;
+        }}
+          
+        .img-circle 
+        {{
+            object-fit: cover;
+            position: relative;
+            margin-top: 335px;
+        }}
+          
+        .cdiv
+        {{
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-image: url('static/wafflesWebBack.png');
+            height:700px;width:700px;
+            position: fixed;
+            top: 52%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }}
+        
+        .zeph
+        {{
+            position: fixed;
+            top: 77%;
+            width:100%;
+        }}
+    </style>
+  </head>
+    <body>
+        <div style="background-color:#42c2f4">
+            <h1 style="font-size:72px;text-align:center">wafflesaZOO</h1>
+        </div>
+            <h2 style="text-align:center;position:fixed;top:10%; width: 100%">Hi! I'm Waffles, Tetazoo's <label  id="description"       style="font-style:italic">description?</label> cat. You can check in on what I'm up to here! </h2>
+        
+      <script>
+          var descriptions = ["least-legged", "most-wheeled", "roundest", "beepiest", "only web-compatible", "second clumsiest", "least-organic", "kibble-free"];
+          var index = Math.floor(Math.random() * 8);
+          var description = descriptions[index];
+          document.getElementById("description").innerHTML = description;
+      </script>
+      <div style="text-align:center" class="cdiv"> 
+        <img class="img-circle" src={face} alt="waffles is happy!"  style="width:300px;height:125px">
             
-            <button type="button" id="forward">Forward</button>
+      </div>
+    <!--   <div style="text-align:center" class="buttons">   
+      <button type="button" id="forward">Forward</button>
       
-              <button type="button" id="backward">Backward</button>
-              <button type="button" id="right">Right</button>
+      <button type="button" id="backward">Backward</button>
+      <button type="button" id="right">Right</button>
 
-              <button type="button" id="left">Left</button>
-            </form>
-
+       <button type="button" id="left">Left</button>
+    </div> -->
+        <div class="zeph">
+            <h2>Waffles' most recent Zephyr <label style="font-style:italic">(-c capslock -i waffles)</label>: </h2>
+            <h2 style="text-align:center">"{z}"</h2>
+        </div>
+        
+        <div style="background-color:#379ad3;position:fixed;top:92%;font-size:12px">
+            <h2 >Contact: caps_lock@mit.edu. Special thanks to cela (for web help), lnor (for moral support), ProjX (for money), rdedhia (for name), and MITERS (for roomba)</h2>
+        </div>
     <script>
-      function json_request(cb, err, endpoint) {
-      var req = new XMLHttpRequest();
-      req.addEventListener("load", function() {
-        var json = JSON.parse(this.responseText);
-        if (json) {
-          cb(json);
-        } else {
-          err("bad json from endpoint " + endpoint);
-        }
-      });
-      req.addEventListener("error", function() {
-        err("xhr failed");
-      });
-      req.open("POST", endpoint, true);
-      req.send();
-      }
+      function json_request(cb, err, endpoint) {{
+        var req = new XMLHttpRequest();
+        req.addEventListener("load", function() {{
+            var json = JSON.parse(this.responseText);
+            if (json) {{
+                cb(json);
+            }} else {{
+                err("bad json from endpoint " + endpoint);
+            }}
+        }});
+        req.addEventListener("error", function() {{
+            err("xhr failed");
+        }});
+        req.open("POST", endpoint, true);
+        req.send();
+      }}
 
       var backward = document.getElementById("backward");
-      backward.onclick = function(){
-        json_request(function(){}, function(){}, "backward");
-      };
+      backward.onclick = function(){{
+        json_request(function(){{}}, function(){{}}, "backward");
+      }};
 
       var right = document.getElementById("right");
-      right.onclick = function(){
-        json_request(function(){}, function(){}, "right");
-      };
+      right.onclick = function(){{
+        json_request(function(){{}}, function(){{}}, "right");
+      }};
 
       var left = document.getElementById("left");
-      left.onclick = function(){
-        json_request(function(){}, function(){}, "left");
-      };
+      left.onclick = function(){{
+        json_request(function(){{}}, function(){{}}, "left");
+      }};
 
       var forward = document.getElementById("forward");
-      forward.onclick = function(){
-        json_request(function(){}, function(){}, "forward");
-      };
+      forward.onclick = function(){{
+        json_request(function(){{}}, function(){{}}, "forward");
+      }};
+        
     </script>
           </body>
       </html>
