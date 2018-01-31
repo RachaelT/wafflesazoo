@@ -64,8 +64,12 @@ class StringGenerator(object):
     @cherrypy.expose
     @cherrypy.tools.json_out()
     def get_zephyr(self):
-        print("GOTTEN")
         return zephyr
+
+    @cherrypy.expose
+    @cherrypy.tools.json_out()
+    def get_mood(self):
+        return face
 
     @cherrypy.expose
     @cherrypy.tools.json_in()

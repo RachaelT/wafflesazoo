@@ -53,7 +53,7 @@
           document.getElementById("description").innerHTML = description;
       </script>
       <div style="text-align:center" class="cdiv"> 
-        <img class="img-circle" src={face} alt="waffles is happy!"  style="width:300px;height:125px">
+        <img class="img-circle" id="face" src={face} alt="waffles is happy!"  style="width:300px;height:125px">
             
       </div>
     <!--   <div style="text-align:center" class="buttons">   
@@ -66,49 +66,74 @@
     </div> -->
         <div class="zeph">
             <h2>Waffles' most recent Zephyr <label style="font-style:italic">(-c capslock -i waffles)</label>: </h2>
-            <h2 style="text-align:center">"{z}"</h2>
+            <h2 style="text-align:center" id="zephyr">"{z}"</h2>
         </div>
         
         <div style="background-color:#379ad3;position:fixed;top:92%;font-size:12px">
             <h2 >Contact: caps_lock@mit.edu. Special thanks to cela (for web help), lnor (for moral support), ProjX (for money), rdedhia (for name), and MITERS (for roomba)</h2>
         </div>
     <script>
-      function json_request(cb, err, endpoint) {{
-        var req = new XMLHttpRequest();
-        req.addEventListener("load", function() {{
-            var json = JSON.parse(this.responseText);
-            if (json) {{
-                cb(json);
-            }} else {{
-                err("bad json from endpoint " + endpoint);
-            }}
-        }});
-        req.addEventListener("error", function() {{
-            err("xhr failed");
-        }});
-        req.open("POST", endpoint, true);
-        req.send();
-      }}
+      // function json_request(cb, err, endpoint) {{
+      //   var req = new XMLHttpRequest();
 
-      var backward = document.getElementById("backward");
-      backward.onclick = function(){{
-        json_request(function(){{}}, function(){{}}, "backward");
-      }};
+      //   req.addEventListener("load", function() {{
+      //       var json = JSON.parse(this.responseText);
+      //       if (json) {{
+      //           cb(json);
+      //       }} else {{
+      //           err("bad json from endpoint " + endpoint);
+      //       }}
+      //   }});
+      //   req.addEventListener("error", function() {{
+      //       err("xhr failed");
+      //   }});
 
-      var right = document.getElementById("right");
-      right.onclick = function(){{
-        json_request(function(){{}}, function(){{}}, "right");
-      }};
+      //   req.open("POST", endpoint, true);
+      //   req.send();
+      // }}
 
-      var left = document.getElementById("left");
-      left.onclick = function(){{
-        json_request(function(){{}}, function(){{}}, "left");
-      }};
+      // var backward = document.getElementById("backward");
+      // backward.onclick = function(){{
+      //   json_request(function(){{}}, function(){{}}, "backward");
+      // }};
 
-      var forward = document.getElementById("forward");
-      forward.onclick = function(){{
-        json_request(function(){{}}, function(){{}}, "forward");
-      }};
+      // var right = document.getElementById("right");
+      // right.onclick = function(){{
+      //   json_request(function(){{}}, function(){{}}, "right");
+      // }};
+
+      // var left = document.getElementById("left");
+      // left.onclick = function(){{
+      //   json_request(function(){{}}, function(){{}}, "left");
+      // }};
+
+      // var forward = document.getElementById("forward");
+      // forward.onclick = function(){{
+      //   json_request(function(){{}}, function(){{}}, "forward");
+      // }};
+      function update(){{
+       var request = new XMLHttpRequest();
+       request.onreadystatechange = function() {{
+          if(this.readyState == 4 && this.status == 200) {{
+           
+            document.getElementById("zephyr").innerHTML = this.responseText;
+         }}
+       }}
+      request.open("GET", "get_zephyr", true);
+      request.send();
+
+      var request = new XMLHttpRequest();
+       request.onreadystatechange = function() {{
+          if(this.readyState == 4 && this.status == 200) {{
+            document.getElementById("face").src = "static/waffles_" + JSON.parse(this.responseText) + ".png";
+         }}
+       }}
+      request.open("GET", "get_mood", true);
+      request.send();
+    }}
+
+      setInterval(update, 5000);
+
         
     </script>
           </body>
