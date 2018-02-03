@@ -2,7 +2,10 @@ import pygame
 import os
 import time
 import random
+import serial
 from rx import Observable, Observer
+
+ser = serial.Serial('/dev/ttyAMA0')
 
 #Updates the actual displayed image based on waffle's reported emotional state.
 #Subscribes to a merged stream of emotions from emotion handler, and from being petted
@@ -16,23 +19,12 @@ class UpdateDisplay(Observer):
 			if event.type == pygame.QUIT:
 				exit(0)
 		
-		#Loads the appropriate image for the emotion
-		if x == "happy":
-			screen.blit(pygame.transform.scale(get_image('faces/waffles_happy.png'), (400, 300)), (0, 0))
-		elif x == "sad":
-			screen.blit(pygame.transform.scale(get_image('faces/waffles_sad.png'), (400, 300)), (0, 0))
-		elif x == "playful":
-			screen.blit(pygame.transform.scale(get_image('faces/waffles_playful.png'), (400, 300)), (0, 0))
-		elif x == "confused":
-			screen.blit(pygame.transform.scale(get_image('faces/waffles_confused.png'), (400, 300)), (0, 0))
-		elif x == "sleep":
-			screen.blit(pygame.transform.scale(get_image('faces/waffles_sleep.png'), (400, 300)), (0, 0))
-		else:
-			screen.blit(pygame.transform.scale(get_image('faces/waffles_neutral.png'), (400, 300)), (0, 0))
-		
+		#Loads the appropriate image for the emotion 
+		screen.blit(pygame.transform.scale(get_image('../faces/waffles_'+ x +'.png'), (400, 300)), (0, 0))
+		ser.write(x.encode())
 		pygame.display.flip()
 
-	def on_error(self, error):
+	def on_error( error):
 		print("Got error: %s" % error)
 
 	def on_completed(self):
@@ -59,10 +51,10 @@ def gen_emote(observer):
 				observer.on_next("happy")
 		#Randomly generates emotions
 		else:
-			emotions = ["sad", "playful", "confused", "sleep", ""]
-			index = random.randint(0,4)
+			emotions = ["sad", "playful", "confused", "sleep"]
+			index = random.randint(0,3)
 			observer.on_next(emotions[index])
-		clock.tick(30)
+		clock.tick(1000)
 
 #Actually starting the game
 pygame.init()
@@ -74,7 +66,7 @@ clock = pygame.time.Clock()
 emote_gen = Observable.create(gen_emote)
 #emote_and_pet = Observable.merge(check_for_pet, )
 disp = emote_gen.subscribe(UpdateDisplay)
-
+ser.close()
 
 
 
