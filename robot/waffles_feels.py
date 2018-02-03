@@ -1,44 +1,34 @@
-class WafflesFeels(Observer):
-	affection = 51
-	frustration = 25
+import pygame 
+from os import sys
 
- 	def on_next(self, x):
- 		move_goal = 
- 		interrupted = 
-        if(x == 123):
-        	if(interrupted):
+def waffles_feels(observer):
+    SAD_WAFFLES = pygame.USEREVENT + 1
+    SLEEP_WAFFLES = pygame.USEREVENT + 2
 
-        		affection += 10
-        		frustration -= 20
-        	else:
-        elif(x == 204):
-        	if(interrupted):
-        	else:
+    was_pet = False
+    while True:
+        #true when waffles is being petted
+        if(pygame.mouse.get_pressed()[0] == 1):
+                pygame.time.set_timer(SAD_WAFFLES, 6000)
+                if not was_pet:
+                    observer.on_next("happy")
+                    pygame.time.set_timer(SLEEP_WAFFLES, 3000)
+                    was_pet = True
 
-        	affection -= 1
-        elif(x = 251):
-        	if(interrupted):
-        	else:
+        #Randomly generates emotions
+        else:
+            if was_pet:
+                was_pet = False
+                observer.on_next("neutral")
+            pygame.time.set_timer(SLEEP_WAFFLES, 0)
 
-        	frustration += 1
-        	affection -= 1
-        evalFeelings()
-        
-    def on_error(self, e):
-        print("Got error: %s" % e)
-        
-    def on_completed(self):
-        print("Sequence completed")
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == SAD_WAFFLES:
+                observer.on_next("sad")
+            elif event.type == SLEEP_WAFFLES:
+                observer.on_next("sleep")
 
-    def evalFeelings():
-    	if(affection < 25 and frustration < 50):
-    		print("waffles is feeling lonely.")
-    	if(affection > 50 and frustration < 30):
-    		print("waffles is happy!")
-    	if(affection > 50 and frustration > 30 ):
-    		print("waffles is confused")
-    	print("waffles is frustrated")
-    	if(affection > 70 and frustration < 20):
-    		print("waffles is in a good mood")
-    	if(affection < 50 and frustration > 50):
-    		print("waffles is in a bad mood")
+
+    clock.tick(30)
