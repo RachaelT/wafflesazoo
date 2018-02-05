@@ -4,11 +4,14 @@ import time
 import random
 import requests
 from rx import Observable, Observer
+from rx.concurrency import ThreadPoolScheduler
+
+
 from waffles_feels import waffles_feels
 from waffles_commands import WafflesCMD
+from waffles_pos import five_second_timer
 
-ser = serial.Serial('/dev/ttyAMA0')
-
+print('0')
 #Updates the actual displayed image based on waffle's reported emotional state.
 class UpdateDisplay(Observer):
 	def on_next(x):
@@ -45,23 +48,34 @@ def get_image(path):
 
 
 #starting the display
+print('0')
 pygame.init()
 screen = pygame.display.set_mode((400, 300))
 done = False
 clock = pygame.time.Clock()
 
-CMD = WafflesCMD()
 
+CMD = WafflesCMD()
+print('1')
 #Creates an observable that publishes the same stream to multiple observers
 emote_gen = Observable.create(waffles_feels).publish()
-
+print('2')
 #The display subscriber
+
+
 disp = emote_gen.subscribe(UpdateDisplay)
-
+print('3')
 #The serial communication subscriber
-cmd = emote_gen.subscribe(CMD)
 
+pool_sch = ThreadPoolScheduler()
+pos_gen = Observable.create(five_second_timer).subscribe_on(pool_sch)
+
+
+emote_and_turn = Observable.merge(emote_gen, pos_gen)
+print('q')
+
+cmd = emote_and_turn.subscribe(CMD)
+print('4')
 emote_gen.connect()
-
-
-
+emote_and_turn.connect()
+print('5')
