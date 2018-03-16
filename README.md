@@ -1,6 +1,10 @@
 # wafflesazoo
 Check in on Tetazoo's favorite cat! wafflesazoo.mit.edu
 
+![alt tag](http://i46.photobucket.com/albums/f122/JasperTechPhotos/Screen%20Shot%202018-03-15%20at%2010.09.04%20PM_zpsf6nyfysq.png "")
+
+![alt tag](http://i46.photobucket.com/albums/f122/JasperTechPhotos/Screen%20Shot%202018-03-15%20at%2010.09.52%20PM_zpsyjnarius.png "")
+
 
 This is a project I'm currently working on, to remake an old Roomba (really an iRobot Create) into a Raspberry Pi and Arduino powered robot "cat" for my dorm's hall. The end goal is to have a robot pet that can navigate autonomously and display its needs and recent interactions online for anyone to see. 
 
